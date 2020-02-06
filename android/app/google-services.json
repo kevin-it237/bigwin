@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "201149446275",
+    "firebase_url": "https://wynbig-97a12.firebaseio.com",
+    "project_id": "wynbig-97a12",
+    "storage_bucket": "wynbig-97a12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201149446275:android:1fee80eae1f90da8bf03b6",
+        "android_client_info": {
+          "package_name": "cm.wynbig.wynbig"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "201149446275-ft33ero63r0pbcs07nr50t40tfeoba73.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cm.wynbig.wynbig",
+            "certificate_hash": "ed5095551cab84252a26fe0ad44840bc76b2a925"
+          }
+        },
+        {
+          "client_id": "201149446275-aushb3cksdmten61uiicmnvt0q9b6pf6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYvi1yHPmL5oMJL9YZ_UNsM-8xeXSC6iI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201149446275-aushb3cksdmten61uiicmnvt0q9b6pf6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201149446275:android:a83637d1a27d0d55bf03b6",
+        "android_client_info": {
+          "package_name": "com.bigwin.bigwin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "201149446275-aushb3cksdmten61uiicmnvt0q9b6pf6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYvi1yHPmL5oMJL9YZ_UNsM-8xeXSC6iI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201149446275-aushb3cksdmten61uiicmnvt0q9b6pf6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
