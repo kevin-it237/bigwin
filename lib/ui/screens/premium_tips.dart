@@ -93,7 +93,7 @@ class _PremiumTipsState extends State<PremiumTips> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 50),
-            child: Text("Subscribe Premium Tips to receive our best betting tips (Higher Odds, Higher Success Rate).", style: TextStyle(color: Colors.white, fontSize: 16.5), textAlign: TextAlign.center,),
+            child: Text("Subscribe Premium Tips to receive our best betting tips (Higher Odds, Higher Success Rate).", style: TextStyle(color: Colors.white, fontSize: 15), textAlign: TextAlign.center,),
           ),
           SizedBox(height: 15,),
           FlatButton(

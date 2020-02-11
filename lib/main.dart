@@ -6,7 +6,8 @@ import 'ui/home.dart';
 import 'ui/components/auth/login.dart';
 import 'ui/components/auth/signup.dart';
 import 'ui/screens/packages.dart';
-import 'ui/components/payment_methods.dart';
+import 'ui/components/payment/payment_methods.dart';
+import 'ui/components/payment/payment_history.dart';
 import 'ui/screens/profile.dart';
 import 'ui/components/payment/stripe.dart';
 import 'redux/store.dart';
@@ -47,6 +48,7 @@ class App extends StatelessWidget {
           '/payment': (BuildContext context) => PaymentMethods(),
           '/profile': (BuildContext context) => Profile(),
           '/stripe': (BuildContext context) => Stripe(),
+          '/payment_history': (BuildContext context) => PaymentHistory(),
         },
     ),);
   }

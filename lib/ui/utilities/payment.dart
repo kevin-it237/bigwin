@@ -8,10 +8,10 @@ class Payment {
     String url = "http://betwin.isjetokoss.xyz/api/v1/stripe/subscribe";
     String accessToken = store.state.accessToken;
     var response = await http.post(url, headers: {"X-Requested-With": "XMLHttpRequest", "Authorization": "Bearer $accessToken"}, body: {
-      "card_number": "4242424242424242",
-      "card_exp_month": "11",
-      "card_exp_year": "2020",
-      "card_cvc": "123",
+      "card_number": cardNumber,
+      "card_exp_month": cardExpMonth,
+      "card_exp_year": cardExpYear,
+      "card_cvc": cardCvc,
       "user_id": userId.toString(),
       "plan_id": planId.toString()
     });

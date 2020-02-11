@@ -108,7 +108,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       } else if(choice.title == "Language") {
 
       } else if(choice.title == "Payment History") {
-
+        Navigator.of(context).pushNamed("/payment_history");
       }
   }
 
@@ -208,7 +208,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             color: Color.fromRGBO(19, 213, 45, 1));
     }
     if(accessToken != "" && isVipUser) {
-      return IconButton(icon: Icon(Icons.star, color: Theme.of(context).buttonColor,), onPressed: null, );
+      return IconButton(icon: Icon(Icons.star, size: 25, color: Theme.of(context).buttonColor,), onPressed: null, );
     }
     return FlatButton(
             onPressed: () => _pushToLogin(context),

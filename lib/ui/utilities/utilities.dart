@@ -49,7 +49,10 @@ class Utilities {
       } else {
         List pronoList = event["odds"];
         if(pronoList.length > 0) {
-          prono = event["odds"][0]["label"] +" "+ event["odd_goals_quotient"].toString();
+          prono = event["odds"][0]["label"];
+          if(event["odd_goals_quotient"] != null) {
+            prono = prono +" "+ event["odd_goals_quotient"].toString();
+          }
         }
       }
       String date = event["fixture"]["event_date"].split(" ")[0]; 

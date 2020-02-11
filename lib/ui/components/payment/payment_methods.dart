@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../models/package.dart';
+import '../../../models/package.dart';
 
 class PaymentMethods extends StatelessWidget {
   const PaymentMethods({Key key}) : super(key: key);
-
-  void _pay(context) {
-    // Navigator.of(context).pop();
-  }
 
   void _payWithStripe(context, package) {
      Navigator.pushNamed(context, "/stripe", 
