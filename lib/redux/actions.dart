@@ -1,10 +1,18 @@
 import '../models/event.dart';
 import '../models/package.dart';
+
 // Set User token 
 class SetToken {
   final String token;
 
   SetToken({this.token});
+}
+
+// Set User Data
+class SetUserData {
+  final Object  userData;
+
+  SetUserData({this.userData});
 }
 
 // TODAY TIPS STATE MANAGEMENT

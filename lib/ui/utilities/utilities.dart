@@ -17,78 +17,16 @@ class Utilities {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Stripe Gateway"),
-          content: Form(
-            key: _formKey,
-            child: ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                Container(child: Text("Secure Payment", style: TextStyle(color: Theme.of(context).buttonColor, fontSize: 10),),),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
-                  ),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Credit Card Number",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(top: 14),
-                    ),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
-                  ),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      hintText: "Expiration Date",
-                      helperText: "mm/yyyy",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(top: 14),
-                    ),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
-                  ),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: "CVV",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(top: 14)
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          title: new Text("Infos"),
+          content: Text(message),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Close"),
+              child: new Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            Container(
-              margin: EdgeInsets.only(right: 13),
-              child: RaisedButton(
-                child: Text("Pay", style: TextStyle(fontSize: 16),),
-                color: Theme.of(context).buttonColor,
-                disabledColor: Colors.grey,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)), 
-                onPressed: () {
-                  
-                },
-              ),
-            )
           ],
         );
       },

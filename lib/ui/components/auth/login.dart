@@ -86,12 +86,16 @@ class _LoginState extends State<Login> {
           // Get user infos
           _getUserInfos(accessToken)
           .then((data) {
-            // Store user data locally
+            // Store user data and token locally
             savePreference(accessToken, data.body);
+            // Set user data on the global state
+            final userDataJson = json.decode(data.body);
+            var userData = userDataJson["data"];
+            store.dispatch(SetUserData(userData: userData));
             // Set token on the global state
             store.dispatch(SetToken(token: accessToken));
             // set cloud messenging token
-              Utilities.setFCMToken(accessToken);
+            Utilities.setFCMToken(accessToken);
             // redirect to the main screen
             _redirect();
           })

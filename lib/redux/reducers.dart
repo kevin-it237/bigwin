@@ -5,6 +5,8 @@ import './actions.dart';
 final reducer = combineReducers<AppState>([
   TypedReducer<AppState, SetToken>(_setTokenActionReducer),
 
+  TypedReducer<AppState, SetUserData>(_setUserDataActionReducer),
+
   TypedReducer<AppState, StartFetchTodayTips>(_dofetchTodayReducer),
   TypedReducer<AppState, GetTodayTips>(_getfetchTodayReducer),
   TypedReducer<AppState, FetchFailedTodayTips>(_fetchFailedTodayReducer),
@@ -29,6 +31,12 @@ final reducer = combineReducers<AppState>([
 AppState _setTokenActionReducer(AppState appState, SetToken action) {
   return appState.copy(
     accessToken: action.token
+  );
+}
+
+AppState _setUserDataActionReducer(AppState appState, SetUserData action) {
+  return appState.copy(
+    userData: action.userData
   );
 }
 

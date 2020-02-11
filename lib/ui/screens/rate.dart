@@ -90,7 +90,7 @@ class _RateState extends State<Rate> {
               child: FlatButton(
               onPressed: rateApp,
               child: Text("Rate", style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w600),),
-              color: Theme.of(context).canvasColor,
+              color: Theme.of(context).primaryColorLight,
             ),),
           ],)
          ],

@@ -26,9 +26,6 @@ class _SignUpState extends State<SignUp> {
   void _toggleVisibility() {
     setState(() {
       _isHidden = !_isHidden;
-      emailController.text = "ngaleuabel1@gmail.com";
-      passwordController.text = "noelle123";
-      nameController.text = "ngaleuabel";
     });
   }
 
@@ -101,6 +98,10 @@ class _SignUpState extends State<SignUp> {
               .then((data) {
                 // Set token on the global state
                 store.dispatch(SetToken(token: accessToken));
+                // Set user data on the global state
+                final userDataJson = json.decode(data.body);
+                var userData = userDataJson["data"];
+                store.dispatch(SetUserData(userData: userData));
                 // Store user data locally
                 savePreference(accessToken, data.body);
                 // set cloud messenging token
@@ -235,7 +236,7 @@ class _SignUpState extends State<SignUp> {
                               ),
                               validator: (String value) {
                                 if (value.trim().length < 5) {
-                                  return "Min 5 caractères";
+                                  return "Min 6 caracters";
                                 }
                               },
                             ),

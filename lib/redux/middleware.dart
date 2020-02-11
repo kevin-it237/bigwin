@@ -87,7 +87,7 @@ Middleware<AppState> _doFetchPremiumMiddleware() {
     if (action is StartFetchPremiumTips) {
       try {
         String url = "http://betwin.isjetokoss.xyz/api/v1/pronostics?tip=premium";
-        getTips(url).then((response) {
+        getPremiumTips(url).then((response) {
           List<Event> allEvents = Utilities.makeEvents(response);
           store.dispatch(GetPremiumTips(results: allEvents));
         }

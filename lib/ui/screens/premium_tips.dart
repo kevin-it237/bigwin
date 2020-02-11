@@ -19,7 +19,7 @@ class PremiumTips extends StatefulWidget {
 }
 
 class _PremiumTipsState extends State<PremiumTips> {
-  bool _isVip = false;
+
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void pushToSubscribe(BuildContext context) {
@@ -59,45 +59,49 @@ class _PremiumTipsState extends State<PremiumTips> {
 
   Widget buildContent(state) {
     if(state.accessToken != "") {
-      return
-        FlatButton(
-          onPressed: () => pushToSubscribe(context),
-          child: Text("See Packages", style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w600),),
-          color: Color.fromRGBO(19, 213, 45, 1));
-    } else {
-      if(_isVip) {
+      bool isVipUser = false;
+      if(state.userData["current_subscription"] != null) {
+        isVipUser = state.userData["current_subscription"]["active"];
+      }
+      if(isVipUser) {
         return StoreConnector<AppState, AppState>(
           converter: (store) => store.state,
           builder: (context, state) {
             return Container(
-              padding: EdgeInsets.only(left: 3.0, right: 3.0, bottom: 5.0),
-              child: SmartRefresher(
-                enablePullDown: true,
-                header: WaterDropMaterialHeader(backgroundColor: Color.fromRGBO(241, 181, 3, 1)),
-                controller: _refreshController,
-                onRefresh: _onRefresh,
-                child: buildWidget(state, "PREMIUM")
-              ) 
+                padding: EdgeInsets.only(left: 3.0, right: 3.0, bottom: 5.0),
+                child: SmartRefresher(
+                    enablePullDown: true,
+                    header: WaterDropMaterialHeader(backgroundColor: Color.fromRGBO(241, 181, 3, 1)),
+                    controller: _refreshController,
+                    onRefresh: _onRefresh,
+                    child: buildWidget(state, "PREMIUM")
+                )
             );
           },
         );
       } else {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50),
-              child: Text("Subscribe Premium Tips to receive our best betting tips (Higher Odds, Higher Success Rate).", style: TextStyle(color: Colors.white, fontSize: 16.5), textAlign: TextAlign.center,),
-            ),
-            SizedBox(height: 15,),
-            FlatButton(
-                onPressed: () => pushToLogin(context),
-                child: Text("Switch to VIP mode", style: TextStyle(fontSize: 13.0, color: Colors.black, fontWeight: FontWeight.w600),),
-                color: Theme.of(context).buttonColor,)
-          ],
-        );
+        return
+          FlatButton(
+              onPressed: () => pushToSubscribe(context),
+              child: Text("See Packages", style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w600),),
+              color: Color.fromRGBO(19, 213, 45, 1));
       }
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 50),
+            child: Text("Subscribe Premium Tips to receive our best betting tips (Higher Odds, Higher Success Rate).", style: TextStyle(color: Colors.white, fontSize: 16.5), textAlign: TextAlign.center,),
+          ),
+          SizedBox(height: 15,),
+          FlatButton(
+            onPressed: () => pushToLogin(context),
+            child: Text("Switch to VIP mode", style: TextStyle(fontSize: 13.0, color: Colors.black, fontWeight: FontWeight.w600),),
+            color: Theme.of(context).buttonColor,)
+        ],
+      );
     }
   }
 

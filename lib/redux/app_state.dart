@@ -3,6 +3,7 @@ import '../models/package.dart';
 
 class AppState {
   String accessToken;
+  Map<String, dynamic> userData;
   List<Event> todayTips;
   List<Event> comboTips;
   List<Event> premiumTips;
@@ -21,7 +22,8 @@ class AppState {
     this.oldTips,
     this.packageList,
     this.accessToken = "",
-    this.todayLoadingState = TodayLoadingState.LOADING, 
+    this.userData,
+    this.todayLoadingState = TodayLoadingState.LOADING,
     this.comboLoadingState = ComboLoadingState.LOADING, 
     this.premiumLoadingState = PremiumLoadingState.LOADING, 
     this.oldLoadingState = OldLoadingState.LOADING, 
@@ -30,6 +32,7 @@ class AppState {
 
   AppState copy({
     String accessToken,
+    Map<String, dynamic> userData,
     List<Event> todayTips,
     List<Event> comboTips,
     List<Event> premiumTips,
@@ -51,7 +54,8 @@ class AppState {
       comboLoadingState: comboLoadingState ?? this.comboLoadingState,
       premiumLoadingState: premiumLoadingState ?? this.premiumLoadingState,
       packagesLoadingState: packagesLoadingState ?? this.packagesLoadingState,
-      accessToken: accessToken ?? this.accessToken
+      accessToken: accessToken ?? this.accessToken,
+      userData: userData ?? this.userData
   );
 }
 

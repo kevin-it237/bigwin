@@ -7,6 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../redux/actions.dart';
 import '../redux/app_state.dart';
+import '../ui/utilities/apiCall.dart';
+import '../ui/utilities/utilities.dart';
+import 'dart:convert';
 
 //Import Screens
 import './screens/today_tips.dart';
@@ -17,6 +20,7 @@ import './screens/rate.dart';
 import '../ui/components/auth/login.dart';
 import '../ui/components/ChoiceMenu.dart';
 import '../ui/components/loader.dart';
+
 
 class Home extends StatefulWidget {
 
@@ -33,12 +37,11 @@ const List<Choice> choicesNonConnected = const <Choice>[
 const List<Choice> choicesConnected = const <Choice>[
   const Choice(title: 'Account Infos', icon: Icons.home),
   const Choice(title: 'Payment History', icon: Icons.directions_bike),
-  const Choice(title: 'Language', icon: Icons.directions_car),
+  //const Choice(title: 'Language', icon: Icons.directions_car),
   const Choice(title: 'Logout', icon: Icons.directions_bike),
 ];
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  bool _vipUser = false;
   bool _loading = false;
   int _selectedIndex = 0;
 
@@ -64,12 +67,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   static Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
     if (message.containsKey('data')) {
       // Handle data message
-      final dynamic data = message['data'];
+      // final dynamic data = message['data'];
     }
 
     if (message.containsKey('notification')) {
       // Handle notification message
-      final dynamic notification = message['notification'];
+      // final dynamic notification = message['notification'];
     }
   }
 
@@ -90,6 +93,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
        },
      );
   }
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -121,18 +125,44 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   
   _getCurrentUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String user = prefs.getString("user");
+    // Init user token with data in locastorage
     String accessToken = prefs.getString("token");
-    store.dispatch(SetToken(token: accessToken));
-    print(user);
+    // Init user data with data in locastorage
+    var userData = prefs.getString("user");
+    if(accessToken != null) {
+      // set token on the global state
+      store.dispatch(SetToken(token: accessToken));
+      // set user data on the global state
+      final userDataJson = json.decode(userData);
+      store.dispatch(SetUserData(userData: userDataJson["data"]));
+      // get user data (the updated value)
+      getUserInfos().then((data) {
+        final responseJson = json.decode(data.body);
+        // Set updated user data on the global state
+        store.dispatch(SetUserData(userData: responseJson["data"]));
+        // Store updated user data locally
+        savePreference(data.body);
+        print(data.body);
+      }).catchError((onError) {
+        Utilities.displayDialog("Connexion error. Please try again.", context);
+      });
+    }
+  }
+
+  // Save persistant data on disk
+  savePreference(userData) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("user", userData);
   }
 
   _logout(String accessToken) async {
     // Clear token on the global state
     store.dispatch(SetToken(token: ""));
+    store.dispatch(SetUserData(userData: null));
     // Clear token on the local storage
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.clear();
+    prefs.remove("user");
+    prefs.remove("token");
     // setState(() {_loading = true;});
     // try {
     //   var url = 'http://betwin.isjetokoss.xyz/api/v1/auth/logout';
@@ -160,20 +190,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   // Display button for vip or NON Vip user
-  Widget _displayMenuBouton(accessToken) {
-    if(accessToken == "" && !_vipUser) {
+  Widget _displayMenuButton(accessToken, userData) {
+    bool isVipUser = false;
+    if(accessToken != "" && userData["current_subscription"] != null) {
+      isVipUser = userData["current_subscription"]["active"];
+    }
+    if(accessToken == "" && !isVipUser) {
       return FlatButton(
             onPressed: () => _pushToLogin(context),
             child: Text("Go to VIP mode", style: TextStyle(fontSize: 13.0, color: Colors.black, fontWeight: FontWeight.w600),),
             color: Theme.of(context).buttonColor,);
     }
-    if(accessToken != "" && !_vipUser) {
+    if(accessToken != "" && !isVipUser) {
       return FlatButton(
             onPressed: () => _pushToSubscribe(context),
             child: Text("See Packages", style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w600),),
             color: Color.fromRGBO(19, 213, 45, 1));
     }
-    if(accessToken != "" && _vipUser) {
+    if(accessToken != "" && isVipUser) {
       return IconButton(icon: Icon(Icons.star, color: Theme.of(context).buttonColor,), onPressed: null, );
     }
     return FlatButton(
@@ -195,7 +229,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             child: StoreConnector<AppState, AppState>(
               converter: (store) => store.state,
               builder: (context, state) {
-                return _displayMenuBouton(state.accessToken);
+                return _displayMenuButton(state.accessToken, state.userData);
               },
             )
           ),
@@ -252,31 +286,31 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           BottomNavyBarItem(
             icon: Icon(Ionicons.md_trophy),
             title: Text("Premium", style: TextStyle(fontSize: 12)),
-            activeColor: Theme.of(context).canvasColor,
+            activeColor: Theme.of(context).primaryColorLight,
             inactiveColor: Colors.white
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.event),
             title: Text("Today's Tips", style: TextStyle(fontSize: 12)),
-            activeColor: Theme.of(context).canvasColor,
+            activeColor: Theme.of(context).primaryColorLight,
             inactiveColor: Colors.white
           ),
           BottomNavyBarItem(
               icon: Icon(Ionicons.md_cube),
               title: Text("Today's Combo", style: TextStyle(fontSize: 12)),
-              activeColor: Theme.of(context).canvasColor,
+              activeColor: Theme.of(context).primaryColorLight,
               inactiveColor: Colors.white
           ),
           BottomNavyBarItem(
               icon: Icon(Icons.history),
               title: Text("Old Tips", style: TextStyle(fontSize: 12)),
-              activeColor: Theme.of(context).canvasColor,
+              activeColor: Theme.of(context).primaryColorLight,
               inactiveColor: Colors.white
           ),
           BottomNavyBarItem(
               icon: Icon(Icons.thumb_up),
               title: Text("Rate Us", style: TextStyle(fontSize: 12)),
-              activeColor: Theme.of(context).canvasColor,
+              activeColor: Theme.of(context).primaryColorLight,
               inactiveColor: Colors.white
           ),
         ],

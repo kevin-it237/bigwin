@@ -8,6 +8,7 @@ import 'ui/components/auth/signup.dart';
 import 'ui/screens/packages.dart';
 import 'ui/components/payment_methods.dart';
 import 'ui/screens/profile.dart';
+import 'ui/components/payment/stripe.dart';
 import 'redux/store.dart';
 
 void main() => runApp(App(store: store));
@@ -31,19 +32,21 @@ class App extends StatelessWidget {
           buttonColor: Color.fromRGBO(241, 181, 3, 1),
           indicatorColor: Color.fromRGBO(241, 181, 3, 1),
           backgroundColor: Color.fromRGBO(35, 35, 35, 1),
-          canvasColor: Color.fromRGBO(20, 115, 230, 1),
+          canvasColor: Colors.white,
           primaryColorDark: Color.fromRGBO(28, 28, 28, 1),
+          primaryColorLight: Color.fromRGBO(20, 115, 230, 1)
         ),
 
         home: Home(),
 
         routes: <String, WidgetBuilder> {
-          '/home': (BuildContext context) => App(),
+          '/home': (BuildContext context) => Home(),
           '/login': (BuildContext context) => Login(),
           '/signup': (BuildContext context) => SignUp(),
           '/package': (BuildContext context) => PackageList(),
           '/payment': (BuildContext context) => PaymentMethods(),
           '/profile': (BuildContext context) => Profile(),
+          '/stripe': (BuildContext context) => Stripe(),
         },
     ),);
   }
