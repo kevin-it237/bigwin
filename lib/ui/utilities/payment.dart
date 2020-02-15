@@ -1,11 +1,12 @@
 import 'package:http/http.dart' as http;
 import 'package:bigwin/redux/store.dart';
+import 'utilities.dart';
 
 class Payment {
 
   // Handle payment with stripe
   static Future<http.Response> payWithStripe(String cardNumber, String cardExpMonth, String cardExpYear, String cardCvc, int userId, int planId) async {
-    String url = "http://betwin.isjetokoss.xyz/api/v1/stripe/subscribe";
+    String url = Utilities.ROOT_URL + "/api/v1/stripe/subscribe";
     String accessToken = store.state.accessToken;
     var response = await http.post(url, headers: {"X-Requested-With": "XMLHttpRequest", "Authorization": "Bearer $accessToken"}, body: {
       "card_number": cardNumber,

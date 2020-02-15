@@ -22,7 +22,7 @@ Middleware<AppState> _doFetchTodatMiddleware() {
 
     if (action is StartFetchTodayTips) {
       try {
-        String url = "http://betwin.isjetokoss.xyz/api/v1/pronostics?tip=free";
+        String url = Utilities.ROOT_URL + "/api/v1/pronostics?tip=free";
         getTips(url).then((response) {
           List<Event> allEvents = Utilities.makeEvents(response);
           store.dispatch(GetTodayTips(results: allEvents));
@@ -43,7 +43,7 @@ Middleware<AppState> _doFetchComboMiddleware() {
     next(action);
 
     if (action is StartFetchComboTips) {
-      String url = "http://betwin.isjetokoss.xyz/api/v1/pronostics?tip=combo";
+      String url = Utilities.ROOT_URL + "/api/v1/pronostics?tip=combo";
       try {
         getTips(url).then((response) {
           List<Event> allEvents = Utilities.makeEvents(response);
@@ -64,7 +64,7 @@ Middleware<AppState> _doFetchOldMiddleware() {
     next(action);
 
     if (action is StartFetchOldTips) {
-      String url = "http://betwin.isjetokoss.xyz/api/v1/pronostics?tip=old";
+      String url = Utilities.ROOT_URL + "/api/v1/pronostics?tip=old";
       try {
         getTips(url).then((response) {
           List<Event> allEvents = Utilities.makeEvents(response);
@@ -86,7 +86,7 @@ Middleware<AppState> _doFetchPremiumMiddleware() {
 
     if (action is StartFetchPremiumTips) {
       try {
-        String url = "http://betwin.isjetokoss.xyz/api/v1/pronostics?tip=premium";
+        String url = Utilities.ROOT_URL + "/api/v1/pronostics?tip=premium";
         getPremiumTips(url).then((response) {
           List<Event> allEvents = Utilities.makeEvents(response);
           store.dispatch(GetPremiumTips(results: allEvents));
@@ -107,7 +107,7 @@ Middleware<AppState> _doFetchPackagesMiddleware() {
 
     if (action is StartFetchPackages) {
       try {
-        String url = "http://betwin.isjetokoss.xyz/api/v1/plans";
+        String url = Utilities.ROOT_URL + "/api/v1/plans";
         getPackages(url).then((response) {
           List<Package> allPackages = Utilities.makePackages(response);
           store.dispatch(GetPackages(results: allPackages));

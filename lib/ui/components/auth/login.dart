@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:loading/loading.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'dart:convert';
+import '../../utilities/apiCall.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -56,7 +57,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<http.Response> _login(String email, String password) async{
-    var url = 'http://betwin.isjetokoss.xyz/api/v1/auth/login';
+    var url = Utilities.ROOT_URL + '/api/v1/auth/login';
     var response = await http.post(url, 
     body: {
       'password': password, 
@@ -68,7 +69,7 @@ class _LoginState extends State<Login> {
 
   // Get the informations of the user
   Future<http.Response> _getUserInfos(String accessToken) async{
-    var url = 'http://betwin.isjetokoss.xyz/api/v1/auth/user';
+    var url = Utilities.ROOT_URL + '/api/v1/auth/user';
     var response = await http.get(url, headers: {"X-Requested-With": "XMLHttpRequest", "Authorization": "Bearer $accessToken"});
     return response;
   }
@@ -95,7 +96,7 @@ class _LoginState extends State<Login> {
             // Set token on the global state
             store.dispatch(SetToken(token: accessToken));
             // set cloud messenging token
-            Utilities.setFCMToken(accessToken);
+            setFCMToken(accessToken);
             // redirect to the main screen
             _redirect();
           })
@@ -234,6 +235,8 @@ class _LoginState extends State<Login> {
                               validator: (String value) {
                                 if (value.trim().length < 5) {
                                   return "Password Error, Min 6 caracters";
+                                } else {
+                                  return "";
                                 }
                               },
                               obscureText: _isHidden,

@@ -5,8 +5,6 @@ import '../../../redux/app_state.dart';
 class PaymentHistory extends StatelessWidget {
   const PaymentHistory({Key key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -73,11 +71,10 @@ class PackageHistoryCard extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Theme.of(context).buttonColor,
                         borderRadius: new BorderRadius.all(Radius.circular(5.0))),
-                    height: 75,
-                    child: Text("\$"+payment["plan"]["price"].toString(), style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900,color: Colors.white),),
+                    height: 88,
+                    child: Text("\$"+payment["plan"]["price"].toString(), style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w900,color: Colors.white),),
                   ),
                 ),
-                // Paris infos
                 Expanded(
                   flex: 75,
                   child:  Container(
@@ -87,28 +84,28 @@ class PackageHistoryCard extends StatelessWidget {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            Text(payment["plan"]["name"], style: TextStyle(fontSize: 18.0,color: Colors.white, fontWeight: FontWeight.w600)),
+                            Text(payment["plan"]["name"], style: TextStyle(fontSize: 17.0,color: Colors.white, fontWeight: FontWeight.w600)),
                             SizedBox(width: 10,),
                             Container(
-                              child: payment["active"] ? Text( "(Active)", style: TextStyle(fontSize: 18.5,color: Colors.green, fontWeight: FontWeight.bold)) :
-                              Text("(Expired)", style: TextStyle(fontSize: 18.5,color: Colors.redAccent, fontWeight: FontWeight.bold)),
+                              child: payment["active"] ? Text( "(Active)", style: TextStyle(fontSize: 17, color: Colors.green, fontWeight: FontWeight.bold)) :
+                              Text("(Expired)", style: TextStyle(fontSize: 17, color: Colors.redAccent, fontWeight: FontWeight.bold)),
                             ),
                           ],),
                         Container(
-                          margin: EdgeInsets.only(top: 10),
+                          margin: EdgeInsets.only(top: 8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text("Pay with " + payment["payment_method"], style: TextStyle(fontSize: 15.0,color: Colors.white)),
+                              Text("Paid with " + payment["payment_method"], style: TextStyle(fontSize: 16.0,color: Colors.white)),
                             ],),),
                         Container(
-                          margin: EdgeInsets.only(top: 10),
+                          margin: EdgeInsets.only(top: 8),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text("Start Date: " + payment["plan_period_start"], style: TextStyle(fontSize: 11.0,color: Colors.white)),
-                              SizedBox(height: 8,),
+                              SizedBox(height: 7,),
                               Text("End Date: " + payment["plan_period_end"], style: TextStyle(fontSize: 11.0,color: Colors.white)),
                             ],),)
                       ],),

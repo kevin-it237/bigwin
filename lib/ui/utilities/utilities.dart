@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import '../../models/event.dart';
-import 'package:http/http.dart' as http;
 import '../../models/package.dart';
 import 'dart:convert';
 
-final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-
 class Utilities {
 
-  // Display Modal
+  static const String ROOT_URL = "http://betwin.isjetokoss.xyz";
+
+  // Display Modal Messages
   static void displayDialog(String message, BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     showDialog(
@@ -33,6 +31,7 @@ class Utilities {
     );
   }
 
+  // Construct single Event
   static List<Event> makeEvents(response) {
     final responseJson = json.decode(response.body);
     List allEvents = responseJson["data"];
@@ -70,6 +69,7 @@ class Utilities {
     return eventsToDisplay;
   }
 
+  // Construct single package (Payment options)
   static List<Package> makePackages(response) {
     final responseJson = json.decode(response.body);
     List<Package> packages = [];
@@ -87,28 +87,6 @@ class Utilities {
       packages.add(newPackage);
     });
     return packages;
-  }
-
-  static void sendToken(String fCMToken, String authToken) async {
-    String tokenUrl = "http://betwin.isjetokoss.xyz/api/v1/auth/update-fcm-token";
-    try {
-        var tokenResponse = await http.post(tokenUrl, headers: {"X-Requested-With": "XMLHttpRequest",  "Authorization": "Bearer $authToken"},  body: {'token': fCMToken});
-        final responseJson = json.decode(tokenResponse.body);
-        print(responseJson);
-      } catch (e) {
-        print(e);
-      }
-  }
-
-  static void setFCMToken(String authToken) { 
-    _firebaseMessaging.getToken()
-    .then((fCMtoken) {
-      print(fCMtoken);
-      sendToken(fCMtoken, authToken);
-    })
-    .catchError((onError) {
-      print(onError);
-    });
   }
 }
 

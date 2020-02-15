@@ -10,6 +10,7 @@ import '../redux/app_state.dart';
 import '../ui/utilities/apiCall.dart';
 import '../ui/utilities/utilities.dart';
 import 'dart:convert';
+import 'dart:io';
 
 //Import Screens
 import './screens/today_tips.dart';
@@ -30,7 +31,7 @@ class Home extends StatefulWidget {
 
 // Menu Items
 const List<Choice> choicesNonConnected = const <Choice>[
-  const Choice(title: 'Language', icon: Icons.directions_car),
+  const Choice(title: 'Quit', icon: Icons.directions_car),
 ];
 
 // Menu Items for connected user
@@ -39,6 +40,7 @@ const List<Choice> choicesConnected = const <Choice>[
   const Choice(title: 'Payment History', icon: Icons.directions_bike),
   //const Choice(title: 'Language', icon: Icons.directions_car),
   const Choice(title: 'Logout', icon: Icons.directions_bike),
+  const Choice(title: 'Quit', icon: Icons.directions_car),
 ];
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
@@ -105,8 +107,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         _logout(store.state.accessToken);
       } else if(choice.title == "Account Infos") {
         Navigator.of(context).pushNamed("/profile");
-      } else if(choice.title == "Language") {
-
+      } else if(choice.title == "Quit") {
+        exit(0);
       } else if(choice.title == "Payment History") {
         Navigator.of(context).pushNamed("/payment_history");
       }
@@ -208,7 +210,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             color: Color.fromRGBO(19, 213, 45, 1));
     }
     if(accessToken != "" && isVipUser) {
-      return IconButton(icon: Icon(Icons.star, size: 25, color: Theme.of(context).buttonColor,), onPressed: null, );
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        color: Theme.of(context).buttonColor,
+        child: Row(
+          children: <Widget>[
+            Icon(Icons.star, color: Colors.white, size: 18,),
+            Text("VIP", style: TextStyle(fontSize: 13.0, color: Colors.white, fontWeight: FontWeight.w600),),
+          ],
+        ),
+      );
     }
     return FlatButton(
             onPressed: () => _pushToLogin(context),
