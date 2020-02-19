@@ -5,11 +5,14 @@ import 'dart:convert';
 
 class Utilities {
 
-  static const String ROOT_URL = "http://betwin.isjetokoss.xyz";
+  static const String ROOT_URL = "https://bigwyn.com";
+
+  static const String AD_MOB_ID = "ca-app-pub-4621796908396700~5537551260";
+
+  static const String AD_UNIT_ID = "ca-app-pub-4621796908396700/9308085943";
 
   // Display Modal Messages
   static void displayDialog(String message, BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
     showDialog(
       context: context,
       builder: (BuildContext context) {

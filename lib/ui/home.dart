@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import '../redux/actions.dart';
 import '../redux/app_state.dart';
 import '../ui/utilities/apiCall.dart';
@@ -42,6 +43,25 @@ const List<Choice> choicesConnected = const <Choice>[
   const Choice(title: 'Logout', icon: Icons.directions_bike),
   const Choice(title: 'Quit', icon: Icons.directions_car),
 ];
+
+
+/* Google AdMod */
+MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+  keywords: <String>['betting', 'football'],
+  contentUrl: 'https://flutter.io',
+  childDirected: false,// or MobileAdGender.female, MobileAdGender.unknown
+  testDevices: <String>[], // Android emulators are considered test devices
+);
+
+BannerAd myBanner = BannerAd(
+  adUnitId: BannerAd.testAdUnitId,
+  size: AdSize.smartBanner,
+  targetingInfo: targetingInfo,
+  listener: (MobileAdEvent event) {
+    print("BannerAd event is $event");
+  },
+);
+/* End Google AdMod */
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   bool _loading = false;
@@ -229,6 +249,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAdMob.instance.initialize(appId: Utilities.AD_MOB_ID).then((e) {
+      myBanner..load()..show(
+        // Positions the banner ad 60 pixels from the bottom of the screen
+        anchorOffset: 60.0,
+        // Banner Position
+        anchorType: AnchorType.bottom,
+      );
+    });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(28, 28, 28, 1),

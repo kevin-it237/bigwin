@@ -51,7 +51,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future<http.Response> _signup(String name, String email, String password) async{
-    var url = 'http://betwin.isjetokoss.xyz/api/v1/auth/register';
+    var url = Utilities.ROOT_URL + '/api/v1/auth/register';
     var response = await http.post(url, 
     body: {
       'name': name, 

@@ -12,7 +12,9 @@ import 'ui/screens/profile.dart';
 import 'ui/components/payment/stripe.dart';
 import 'redux/store.dart';
 
-void main() => runApp(App(store: store));
+void main() {
+  runApp(App(store: store));
+}
 
 class App extends StatelessWidget {
   // This widget is the root of your application.
