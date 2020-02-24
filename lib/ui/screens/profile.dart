@@ -55,7 +55,7 @@ class _ProfileState extends State<Profile> {
                   CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 80,
-                    backgroundImage: AssetImage('assets/logo.png'),
+                    backgroundImage: AssetImage('assets/user-logo.png'),
                   ),
                   SizedBox(height: 20,),
                   Text(

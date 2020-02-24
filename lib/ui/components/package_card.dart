@@ -12,6 +12,21 @@ class PackageCard extends StatelessWidget {
     arguments: Package(id: this.package.id, name: this.package.name, price: this.package.price, interval: this.package.interval, intervalCount: this.package.intervalCount, categoryTip: this.package.categoryTip),);
   }
 
+  Image setPackageImage(Package package) {
+    String packageName = package.name.toLowerCase();
+    if(packageName == "bigwin discovered") {
+      return Image(image: AssetImage('assets/1.png'), width: 85,);
+    } else if(packageName == "bigwin pro") {
+      return Image(image: AssetImage('assets/2.png'), width: 85,);
+    } else if(packageName == "bigwin ultra") {
+      return Image(image: AssetImage('assets/3.png'), width: 85,);
+    } else if(packageName == "bigwin mega") {
+      return Image(image: AssetImage('assets/4.png'), width: 85,);
+    } else {
+      return Image(image: AssetImage('assets/logo.png'), width: 85,);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +41,7 @@ class PackageCard extends StatelessWidget {
                 padding: EdgeInsets.only(left: 10),
                 alignment: Alignment.center,
                 height: 120,
-                child: Image(image: AssetImage('assets/logo.png'), width: 85,),
+                child: setPackageImage(package),
               ),
             ),
             SizedBox(width: 18,),
