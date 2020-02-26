@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:admob_flutter/admob_flutter.dart';
 import 'redux/app_state.dart';
 import 'ui/home.dart';
 import 'ui/components/auth/login.dart';
@@ -11,8 +12,10 @@ import 'ui/components/payment/payment_history.dart';
 import 'ui/screens/profile.dart';
 import 'ui/components/payment/stripe.dart';
 import 'redux/store.dart';
+import 'ui/utilities/utilities.dart';
 
 void main() {
+  Admob.initialize("ca-app-pub-3940256099942544~3347511713");
   runApp(App(store: store));
 }
 

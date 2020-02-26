@@ -5,7 +5,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:firebase_admob/firebase_admob.dart';
 import '../redux/actions.dart';
 import '../redux/app_state.dart';
 import '../ui/utilities/apiCall.dart';
@@ -22,6 +21,7 @@ import './screens/rate.dart';
 import '../ui/components/auth/login.dart';
 import '../ui/components/ChoiceMenu.dart';
 import '../ui/components/loader.dart';
+import '../ui/components/ad_banner.dart';
 
 
 class Home extends StatefulWidget {
@@ -44,24 +44,6 @@ const List<Choice> choicesConnected = const <Choice>[
   const Choice(title: 'Quit', icon: Icons.directions_car),
 ];
 
-
-/* Google AdMod */
-MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-  keywords: <String>['betting', 'football'],
-  contentUrl: 'https://flutter.io',
-  childDirected: false,// or MobileAdGender.female, MobileAdGender.unknown
-  testDevices: <String>[], // Android emulators are considered test devices
-);
-
-BannerAd myBanner = BannerAd(
-  adUnitId: BannerAd.testAdUnitId,
-  size: AdSize.smartBanner,
-  targetingInfo: targetingInfo,
-  listener: (MobileAdEvent event) {
-    print("BannerAd event is $event");
-  },
-);
-/* End Google AdMod */
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   bool _loading = false;
@@ -249,14 +231,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAdMob.instance.initialize(appId: Utilities.AD_MOB_ID).then((e) {
-      myBanner..load()..show(
-        // Positions the banner ad 60 pixels from the bottom of the screen
-        anchorOffset: 60.0,
-        // Banner Position
-        anchorType: AnchorType.bottom,
-      );
-    });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(28, 28, 28, 1),
@@ -302,58 +276,86 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
       backgroundColor: Color.fromRGBO(35, 35, 35, 1),
 
-      body: _loading ? Loader() : PageView(
+      /*body: _loading ? Loader() : PageView(
         children: _tabList,
         controller: _pageController,
         onPageChanged: (index) => setState(() {
             _selectedIndex = index;
         }),
-      ),
+      ),*/
 
-      bottomNavigationBar: BottomNavyBar(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        selectedIndex: _selectedIndex,
-        showElevation: true,
-        backgroundColor: Theme.of(context).primaryColor,
-        onItemSelected: (index) => setState(() {
+        body: Stack(
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height,
+              padding: EdgeInsets.only(bottom: 115),
+              child: _loading ? Loader() : PageView(
+                children: _tabList,
+                controller: _pageController,
+                onPageChanged: (index) => setState(() {
+                  _selectedIndex = index;
+                }),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 50,
+              child: Container(
+                child: BottomNavyBar(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  selectedIndex: _selectedIndex,
+                  showElevation: true,
+                  backgroundColor: Theme.of(context).primaryColor,
+                  onItemSelected: (index) => setState(() {
                     _selectedIndex = index;
                     _pageController.animateToPage(index,
-                        duration: Duration(milliseconds: 300), curve: Curves.ease);
-          }),
-          iconSize: 20.0,
-        items: [
-          BottomNavyBarItem(
-            icon: Icon(Ionicons.md_trophy),
-            title: Text("Premium", style: TextStyle(fontSize: 12)),
-            activeColor: Theme.of(context).primaryColorLight,
-            inactiveColor: Colors.white
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.event),
-            title: Text("Today's Tips", style: TextStyle(fontSize: 12)),
-            activeColor: Theme.of(context).primaryColorLight,
-            inactiveColor: Colors.white
-          ),
-          BottomNavyBarItem(
-              icon: Icon(Ionicons.md_cube),
-              title: Text("Today's Combo", style: TextStyle(fontSize: 12)),
-              activeColor: Theme.of(context).primaryColorLight,
-              inactiveColor: Colors.white
-          ),
-          BottomNavyBarItem(
-              icon: Icon(Icons.history),
-              title: Text("Old Tips", style: TextStyle(fontSize: 12)),
-              activeColor: Theme.of(context).primaryColorLight,
-              inactiveColor: Colors.white
-          ),
-          BottomNavyBarItem(
-              icon: Icon(Icons.thumb_up),
-              title: Text("Rate Us", style: TextStyle(fontSize: 12)),
-              activeColor: Theme.of(context).primaryColorLight,
-              inactiveColor: Colors.white
-          ),
-        ],
-      )
+                    duration: Duration(milliseconds: 300), curve: Curves.ease);
+                  }),
+                  iconSize: 20.0,
+                  items: [
+                  BottomNavyBarItem(
+                    icon: Icon(Ionicons.md_trophy),
+                    title: Text("Premium", style: TextStyle(fontSize: 12)),
+                    activeColor: Theme.of(context).primaryColorLight,
+                    inactiveColor: Colors.white
+                  ),
+                  BottomNavyBarItem(
+                    icon: Icon(Icons.event),
+                    title: Text("Today's Tips", style: TextStyle(fontSize: 12)),
+                    activeColor: Theme.of(context).primaryColorLight,
+                    inactiveColor: Colors.white
+                  ),
+                  BottomNavyBarItem(
+                    icon: Icon(Ionicons.md_cube),
+                    title: Text("Today's Combo", style: TextStyle(fontSize: 12)),
+                    activeColor: Theme.of(context).primaryColorLight,
+                    inactiveColor: Colors.white
+                  ),
+                  BottomNavyBarItem(
+                    icon: Icon(Icons.history),
+                    title: Text("Old Tips", style: TextStyle(fontSize: 12)),
+                    activeColor: Theme.of(context).primaryColorLight,
+                    inactiveColor: Colors.white
+                  ),
+                  BottomNavyBarItem(
+                    icon: Icon(Icons.thumb_up),
+                    title: Text("Rate Us", style: TextStyle(fontSize: 12)),
+                    activeColor: Theme.of(context).primaryColorLight,
+                    inactiveColor: Colors.white
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: AbBanner(),
+            )
+          ],
+        ),
     );
   }
 }

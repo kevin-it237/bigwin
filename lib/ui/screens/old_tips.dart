@@ -10,6 +10,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../../redux/app_state.dart';
+import '../utilities/ads.dart';
 
 class OldTips extends StatelessWidget {
 
@@ -45,6 +46,8 @@ class OldTips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Init ads
+    showInterstitial();
     return StoreConnector<AppState, AppState>(
       converter: (store) => store.state,
       builder: (context, state) {

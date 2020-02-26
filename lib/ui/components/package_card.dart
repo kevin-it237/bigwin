@@ -9,18 +9,18 @@ class PackageCard extends StatelessWidget {
 
   void _pushToPayment(context) {
     Navigator.pushNamed(context, "/payment", 
-    arguments: Package(id: this.package.id, name: this.package.name, price: this.package.price, interval: this.package.interval, intervalCount: this.package.intervalCount, categoryTip: this.package.categoryTip),);
+    arguments: Package(id: this.package.id, name: this.package.name, price: this.package.price, interval: this.package.interval, categoryTip: this.package.categoryTip),);
   }
 
   Image setPackageImage(Package package) {
     String packageName = package.name.toLowerCase();
-    if(packageName == "bigwin discovered") {
+    if(packageName == "bigwyn discovered") {
       return Image(image: AssetImage('assets/1.png'), width: 85,);
-    } else if(packageName == "bigwin pro") {
+    } else if(packageName == "bigwyn pro") {
       return Image(image: AssetImage('assets/2.png'), width: 85,);
-    } else if(packageName == "bigwin ultra") {
+    } else if(packageName == "bigwyn ultra") {
       return Image(image: AssetImage('assets/3.png'), width: 85,);
-    } else if(packageName == "bigwin mega") {
+    } else if(packageName == "bigwyn mega") {
       return Image(image: AssetImage('assets/4.png'), width: 85,);
     } else {
       return Image(image: AssetImage('assets/logo.png'), width: 85,);
@@ -30,7 +30,7 @@ class PackageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: package.id == 1 ? 20: 0, bottom: 8, left: 13, right: 13),
+      margin: EdgeInsets.only(top: package.name.toLowerCase() == "bigwyn discovered" ? 20: 0, bottom: 8, left: 13, right: 13),
       child: Card(
         elevation: 1.5,
         child: Row(
@@ -52,7 +52,7 @@ class PackageCard extends StatelessWidget {
                 children: <Widget>[
                   Text(package.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,),textAlign: TextAlign.left,),
                   SizedBox(height: 5,),
-                  Text("Unlock premium service for "+package.interval+".", style: TextStyle(fontSize: 12,),textAlign: TextAlign.left,),
+                  Text("Unlock premium service for "+package.intervalCount.toString()+ " " +package.interval+ "(s).", style: TextStyle(fontSize: 12,),textAlign: TextAlign.left,),
                 ],
               ),
             ),
@@ -67,7 +67,7 @@ class PackageCard extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(top: 5),
                       padding: EdgeInsets.only(bottom: 15, top: 5),
-                      child: Text(package.price.toString()+ " \$US", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,),textAlign: TextAlign.left,),
+                      child: Text("\$" + package.price.toStringAsFixed(2), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,),textAlign: TextAlign.left,),
                     ),
                     Container(
                       padding: EdgeInsets.only(bottom: 15, top: 5, left: 20, right: 20),
@@ -76,7 +76,7 @@ class PackageCard extends StatelessWidget {
                         child: Text("Select", style: TextStyle(fontSize: 13),),
                         color: Theme.of(context).buttonColor,
                         disabledColor: Colors.grey,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)), 
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
                         onPressed: () => _pushToPayment(context),
                       ),
                     ),

@@ -1,7 +1,7 @@
 class Package {
   int id;
   String name;
-  int price;
+  double price;
   String interval;
   int intervalCount;
   String categoryTip;

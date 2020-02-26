@@ -9,7 +9,9 @@ class Utilities {
 
   static const String AD_MOB_ID = "ca-app-pub-4621796908396700~5537551260";
 
-  static const String AD_UNIT_ID = "ca-app-pub-4621796908396700/9308085943";
+  static const String AD_BANNER_UNIT_ID = "ca-app-pub-4621796908396700/9308085943";
+
+  static const String AD_INTER_UNIT_ID = "ca-app-pub-4621796908396700/9308085943";
 
   // Display Modal Messages
   static void displayDialog(String message, BuildContext context) {
@@ -80,7 +82,7 @@ class Utilities {
     allPackages.forEach((package) {
       int id = package["id"];
       String name = package["name"];
-      int price = package["price"];
+      double price = package["price"];
       String interval = package["interval"];
       int intervalCount = package["interval_count"];
       String categoryTip = package["category_tip"];
