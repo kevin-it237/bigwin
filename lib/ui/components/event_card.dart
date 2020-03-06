@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../models/event.dart';
 
 class EventCard extends StatelessWidget {
@@ -46,16 +46,25 @@ class EventCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(0),
-                    child: Icon(Ionicons.md_football, size: 20, color: Colors.white,)
-                    // child: event.logo == null ? Icon(Ionicons.md_football, size: 20, color: Colors.white,) :
-                    // SvgPicture.network(
-                    //   event.logo,
-                    //   width: 20,),
+                  Container(
+                    alignment: Alignment.center,
+                    //child: Icon(Ionicons.md_football, size: 20, color: Colors.white,)
+                    child: event.logo == null ? Icon(Ionicons.md_football, size: 20, color: Colors.white,) :
+                    CachedNetworkImage(
+                      width: 25,
+                      height: 25,
+                      placeholderFadeInDuration: Duration(seconds: 10),
+                      imageUrl: event.logo,
+                      placeholder: (context, url) => SizedBox(
+                        child: CircularProgressIndicator(backgroundColor: Colors.white, strokeWidth: 2),
+                        height: 12.0,
+                        width: 12.0,
+                      ),
+                      errorWidget: (context, url, error) => Icon(Ionicons.md_football, size: 20, color: Colors.white,),
+                    ),
                   ),
                   SizedBox(width: 10,),
-                  Text(event.competition, style: TextStyle(color: Colors.white, fontSize: 13.0)),
+                  Container(alignment: Alignment.center, child: Text(event.competition, style: TextStyle(color: Colors.white, fontSize: 13.0)),)
                 ],
               )
             ),

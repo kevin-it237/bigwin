@@ -6,7 +6,7 @@ class Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).accentColor,
+      color: Theme.of(context).backgroundColor,
       child: Center(
         child: ListView(
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 100),

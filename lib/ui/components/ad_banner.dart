@@ -3,6 +3,8 @@ import 'package:admob_flutter/admob_flutter.dart';
 import '../utilities/utilities.dart';
 
 class AbBanner extends StatelessWidget {
+  const AbBanner();
+
   @override
   Widget build(BuildContext context) {
     return Container(

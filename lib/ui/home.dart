@@ -274,21 +274,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ],
       ),
 
-      backgroundColor: Color.fromRGBO(35, 35, 35, 1),
-
-      /*body: _loading ? Loader() : PageView(
-        children: _tabList,
-        controller: _pageController,
-        onPageChanged: (index) => setState(() {
-            _selectedIndex = index;
-        }),
-      ),*/
+      backgroundColor: Theme.of(context).backgroundColor,
 
         body: Stack(
           children: <Widget>[
             Container(
               height: MediaQuery.of(context).size.height,
-              padding: EdgeInsets.only(bottom: 115),
+              padding: EdgeInsets.only(bottom: 108),
               child: _loading ? Loader() : PageView(
                 children: _tabList,
                 controller: _pageController,
@@ -352,7 +344,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               left: 0,
               right: 0,
               bottom: 0,
-              child: AbBanner(),
+              child: const AbBanner(),
             )
           ],
         ),

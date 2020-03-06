@@ -54,6 +54,7 @@ class Utilities {
         List pronoList = event["odds"];
         if(pronoList.length > 0) {
           prono = event["odds"][0]["label"];
+          prono = prono.replaceAll("\n", "").replaceAll("\r", "");
           if(event["odd_goals_quotient"] != null) {
             prono = prono +" "+ event["odd_goals_quotient"].toString();
           }
