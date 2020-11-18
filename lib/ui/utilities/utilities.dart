@@ -5,7 +5,7 @@ import 'dart:convert';
 
 class Utilities {
 
-  static const String ROOT_URL = "https://bigwyn.com";
+  static const String ROOT_URL = "http://josspredictfoot.herokuapp.com";
 
   static const String AD_MOB_ID = "ca-app-pub-4621796908396700~5537551260";
 
@@ -39,35 +39,22 @@ class Utilities {
   // Construct single Event
   static List<Event> makeEvents(response) {
     final responseJson = json.decode(response.body);
-    List allEvents = responseJson["data"];
+    List allEvents = responseJson;
     List<Event> eventsToDisplay = [];
     allEvents.forEach((event) {
-      String match = event["fixture"]["home"]["name"]+ " - " +event["fixture"]["away"]["name"];
-      String odds = event["cote"].toStringAsFixed(2); 
-      String competition = event["fixture"]["league"]["name"];
-      String logo = event["fixture"]["league"]["logo"];
-      String score = event["fixture"]["score"];
-      String prono = "";
-      if(event["winner"] != null) {
-        prono = event["winner"]["name"]+ " Win";
-      } else {
-        List pronoList = event["odds"];
-        if(pronoList.length > 0) {
-          prono = event["odds"][0]["label"];
-          prono = prono.replaceAll("\n", "").replaceAll("\r", "");
-          if(event["odd_goals_quotient"] != null) {
-            prono = prono +" "+ event["odd_goals_quotient"].toString();
-          }
-        }
-      }
-      String date = event["fixture"]["event_date"].split(" ")[0]; 
-      List longhour = event["fixture"]["event_date"].split(" ")[1].split(":"); 
-      String hour = longhour[0]+":"+longhour[1];
-      bool oldDisplayable = event["old_displayable"];
-      String category = event["category_tip"];
+      String match = event["fixture"]["homeTeam"]["team_name"]+ " - " +event["fixture"]["awayTeam"]["team_name"];
+      String odds = event["coast"].toStringAsFixed(2); 
+      String competition = event["championship"]["name"];
+      String logo = event["championship"]["logo"];
+      String score = "";
+      String prono = event["prediction"];
+      String date = event["date"]; 
+      String hour = event["fixture"]["event_date"];
+      bool oldDisplayable = true;
+      String category = event["type_prediction"];
       bool live = false;
-      if(event["status"] == "waiting" || event["status"] == "pending") live = true;
-      bool won = event["pronostic_is_win"];
+      if(event["fixture"]["statuts"] == "PENDING") live = true;
+      bool won = event["iswin"];
       // Create an event
       Event newEvent = Event(competition: competition, match: match, odds: odds, score: score, prono: prono, hour: hour, date: date, won: won, live: live, logo: logo, category: category, oldDisplayable: oldDisplayable);
       eventsToDisplay.add(newEvent);

@@ -10,19 +10,7 @@ final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
 // Get Free, Today and combo types
 Future<http.Response> getTips(String url) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String accessToken = prefs.getString("openToken");
-  if(accessToken == null) {
-    String tokenUrl = Utilities.ROOT_URL + "/api/v1/auth/default-access-token";
-    try {
-      var tokenResponse = await http.get(tokenUrl, headers: {"X-Requested-With": "XMLHttpRequest"});
-      final responseJson = json.decode(tokenResponse.body);
-      accessToken = responseJson["data"]["access_token"];
-    } catch (e) {
-      print(e);
-    }
-  }
-  var response = await http.get(url, headers: {"X-Requested-With": "XMLHttpRequest", "Authorization": "Bearer $accessToken"});
+  var response = await http.get(url);
   return response;
 }
 

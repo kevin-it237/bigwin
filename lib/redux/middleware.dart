@@ -22,12 +22,13 @@ Middleware<AppState> _doFetchTodatMiddleware() {
 
     if (action is StartFetchTodayTips) {
       try {
-        String url = Utilities.ROOT_URL + "/api/v1/pronostics?tip=free";
+        String url = Utilities.ROOT_URL + "/api/v1/predict/getpredict";
         getTips(url).then((response) {
           List<Event> allEvents = Utilities.makeEvents(response);
+          // Filter event by category
+          allEvents = allEvents.where((e) => e.category == "Today's Tips").toList();
           store.dispatch(GetTodayTips(results: allEvents));
-        }
-        ).catchError((error) {
+        }).catchError((error) {
           print(error);
           store.dispatch(FetchFailedTodayTips());
         });
@@ -43,10 +44,12 @@ Middleware<AppState> _doFetchComboMiddleware() {
     next(action);
 
     if (action is StartFetchComboTips) {
-      String url = Utilities.ROOT_URL + "/api/v1/pronostics?tip=combo";
+      String url = Utilities.ROOT_URL + "/api/v1/predict/getpredict";
       try {
         getTips(url).then((response) {
           List<Event> allEvents = Utilities.makeEvents(response);
+          // Filter event by category
+          allEvents = allEvents.where((e) => e.category == "Combo Tips").toList();
           store.dispatch(GetComboTips(results: allEvents));
         }
         ).catchError((error) {
@@ -68,6 +71,8 @@ Middleware<AppState> _doFetchOldMiddleware() {
       try {
         getTips(url).then((response) {
           List<Event> allEvents = Utilities.makeEvents(response);
+          // Filter event by category
+          allEvents = allEvents.where((e) => e.category == "VIP Tips").toList();
           store.dispatch(GetOldTips(results: allEvents));
         }
         ).catchError((error) {
@@ -86,7 +91,7 @@ Middleware<AppState> _doFetchPremiumMiddleware() {
 
     if (action is StartFetchPremiumTips) {
       try {
-        String url = Utilities.ROOT_URL + "/api/v1/pronostics?tip=premium";
+        String url = Utilities.ROOT_URL + "/api/v1/predict/getpredict";
         getPremiumTips(url).then((response) {
           List<Event> allEvents = Utilities.makeEvents(response);
           store.dispatch(GetPremiumTips(results: allEvents));
